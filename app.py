@@ -347,7 +347,7 @@ menu = st.sidebar.radio(
 
 st.sidebar.markdown("---")
 
-if st.sidebar.button("📥 Muat / Reset Data Dummy"):
+if st.sidebar.button("📥 Muat / Reset Data"):
     reset_dummy_data()
     st.success("Data dummy berhasil dimuat. Silakan refresh halaman jika tabel belum berubah.")
 
