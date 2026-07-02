@@ -27,64 +27,93 @@ st.markdown("""
         background: linear-gradient(90deg, #003D79, #F58220);
         padding: 24px;
         border-radius: 14px;
-        color: white;
+        color: white !important;
         margin-bottom: 20px;
     }
 
     .title-box h1 {
         margin: 0;
         font-size: 30px;
+        color: white !important;
     }
 
     .title-box p {
         margin-top: 8px;
         font-size: 16px;
+        color: white !important;
     }
 
     .info-card {
-        background-color: white;
+        background-color: #ffffff;
+        color: #1f2937 !important;
         padding: 18px;
         border-radius: 12px;
         border: 1px solid #e4e8f0;
-        box-shadow: 0px 2px 8px rgba(0,0,0,0.04);
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
         margin-bottom: 16px;
+    }
+
+    .info-card h1,
+    .info-card h2,
+    .info-card h3,
+    .info-card h4,
+    .info-card p,
+    .info-card b {
+        color: #1f2937 !important;
     }
 
     .section-title {
         font-size: 22px;
         font-weight: 700;
-        color: #003D79;
+        color: #005BAB !important;
         margin-bottom: 8px;
     }
 
     div[data-testid="stMetric"] {
-        background-color: white;
+        background-color: #ffffff;
         padding: 18px;
         border-radius: 12px;
         border: 1px solid #e4e8f0;
-        box-shadow: 0px 2px 8px rgba(0,0,0,0.04);
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
+    }
+
+    div[data-testid="stMetric"] label,
+    div[data-testid="stMetric"] div,
+    div[data-testid="stMetric"] p,
+    div[data-testid="stMetric"] span {
+        color: #1f2937 !important;
+    }
+
+    div[data-testid="stMetricValue"] {
+        color: #003D79 !important;
+        font-weight: 700 !important;
+    }
+
+    div[data-testid="stMetricLabel"] {
+        color: #374151 !important;
+        font-weight: 600 !important;
     }
 
     .btn-logo-box {
-        background-color: white;
+        background-color: #ffffff;
         border-radius: 12px;
         padding: 14px;
         border-left: 6px solid #F58220;
-        box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
         margin-bottom: 18px;
     }
 
     .btn-logo-text {
         font-size: 28px;
         font-weight: 800;
-        color: #003D79;
+        color: #003D79 !important;
         letter-spacing: 1px;
         margin-bottom: 0px;
     }
 
     .btn-logo-subtitle {
         font-size: 13px;
-        color: #F58220;
+        color: #F58220 !important;
         font-weight: 600;
         margin-top: -4px;
     }
