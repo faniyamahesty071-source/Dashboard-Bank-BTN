@@ -129,9 +129,6 @@ DATA_FILE = DATA_DIR / "prospek_nasabah.csv"
 ASSETS_DIR = Path("assets")
 LOGO_PATH = ASSETS_DIR / "logo_btn.png"
 
-# Logo Bank BTN dari URL PNG
-LOGO_URL = "https://iconape.com/wp-content/png_logo_vector/bank-tabungan-negara-btn-logo.png"
-
 # =========================
 # MASTER DATA
 # =========================
@@ -349,7 +346,7 @@ st.sidebar.markdown("---")
 
 if st.sidebar.button("📥 Muat / Reset Data"):
     reset_dummy_data()
-    st.success("Data dummy berhasil dimuat. Silakan refresh halaman jika tabel belum berubah.")
+    st.success("Data berhasil dimuat. Silakan refresh halaman jika tabel belum berubah.")
 
 st.sidebar.info(
     "Website ini digunakan untuk pencatatan dan monitoring prospek nasabah KUR/KPR "
