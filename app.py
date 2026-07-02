@@ -331,9 +331,14 @@ df = load_data()
 # SIDEBAR
 # =========================
 if LOGO_PATH.exists():
-    st.sidebar.image(str(LOGO_PATH), width=190)
+    st.sidebar.image(str(LOGO_PATH), width=170)
 else:
-    st.sidebar.image(LOGO_URL, width=190)
+    st.sidebar.markdown("""
+    <div class="btn-logo-box">
+        <div class="btn-logo-text">BANK BTN</div>
+        <div class="btn-logo-subtitle">Prospek Nasabah KUR/KPR</div>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.sidebar.markdown("### Navigasi")
 
