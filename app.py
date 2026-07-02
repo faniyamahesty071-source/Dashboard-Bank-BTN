@@ -100,6 +100,9 @@ DATA_FILE = DATA_DIR / "prospek_nasabah.csv"
 ASSETS_DIR = Path("assets")
 LOGO_PATH = ASSETS_DIR / "logo_btn.png"
 
+# Logo Bank BTN dari URL PNG
+LOGO_URL = "https://iconape.com/wp-content/png_logo_vector/bank-tabungan-negara-btn-logo.png"
+
 # =========================
 # MASTER DATA
 # =========================
@@ -302,14 +305,9 @@ df = load_data()
 # SIDEBAR
 # =========================
 if LOGO_PATH.exists():
-    st.sidebar.image(str(LOGO_PATH), width=170)
+    st.sidebar.image(str(LOGO_PATH), width=190)
 else:
-    st.sidebar.markdown("""
-    <div class="btn-logo-box">
-        <div class="btn-logo-text">BANK BTN</div>
-        <div class="btn-logo-subtitle">Prospek Nasabah KUR/KPR</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.sidebar.image(LOGO_URL, width=190)
 
 st.sidebar.markdown("### Navigasi")
 
