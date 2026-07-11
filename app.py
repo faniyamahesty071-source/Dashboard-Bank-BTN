@@ -5,573 +5,195 @@ from datetime import date, timedelta
 import plotly.express as px
 
 
-
 # =====================================================
-# PAGE CONFIGURATION
+# KONFIGURASI HALAMAN
 # =====================================================
 
 st.set_page_config(
-
-    page_title="BTN Monitoring Prospek KUR/KPR",
-
+    page_title="Monitoring Prospek Nasabah KUR/KPR",
     page_icon="🏦",
-
-    layout="wide",
-
-    initial_sidebar_state="expanded"
-
+    layout="wide"
 )
 
 
-
-
-
 # =====================================================
-# CORPORATE BTN STYLE
+# CSS STYLE
 # =====================================================
-
 
 st.markdown("""
-
 <style>
 
-
-/* =================================================
-GLOBAL STYLE
-================================================= */
-
-
-html, body, [class*="css"] {
-
-
-    font-family:
-
-    "Segoe UI",
-
-    Arial,
-
-    sans-serif;
-
-
-}
-
-
-
-/* mengikuti tema streamlit */
-
 .main {
-
-
-    background-color:
-
-    var(--background-color);
-
-
+    background-color:#f7f9fc;
 }
 
 
-
-
-
-/* =================================================
-HEADER CORPORATE
-================================================= */
-
+/* HEADER */
 
 .title-box {
 
-
     background:
-
     linear-gradient(
-
-        135deg,
-
-        #003B71,
-
-        #005BAB
-
+        90deg,
+        #003D79,
+        #F58220
     );
 
+    padding:25px;
+    border-radius:15px;
+    color:white;
 
-    padding:
-
-    30px 35px;
-
-
-    border-radius:
-
-    18px;
-
-
-    margin-bottom:
-
-    25px;
-
-
-    box-shadow:
-
-    0 8px 25px rgba(0,0,0,0.15);
-
-
+    margin-bottom:20px;
 }
-
 
 
 .title-box h1 {
 
-
     color:white !important;
-
-
-    font-size:
-
-    32px;
-
-
-    font-weight:
-
-    800;
-
-
-    margin-bottom:
-
-    8px;
-
+    font-size:32px;
+    margin-bottom:5px;
 
 }
-
 
 
 .title-box p {
 
-
-    color:
-
-    rgba(255,255,255,0.9)
-
-    !important;
-
-
-    font-size:
-
-    16px;
-
+    color:white !important;
+    font-size:16px;
 
 }
 
 
 
-
-
-
-/* =================================================
-SECTION TITLE
-================================================= */
-
-
-.section-title {
-
-
-    color:
-
-    #005BAB !important;
-
-
-    font-size:
-
-    24px;
-
-
-    font-weight:
-
-    750;
-
-
-}
-
-
-
-
-
-
-
-/* =================================================
-CARD
-================================================= */
-
+/* CARD */
 
 .info-card {
 
-
-    background:
-
-    var(--secondary-background-color);
-
-
-    padding:
-
-    24px;
-
-
-    border-radius:
-
-    16px;
-
+    background:white;
+    padding:20px;
+    border-radius:15px;
 
     border:
-
-    1px solid rgba(128,128,128,0.25);
-
+    1px solid #e5e7eb;
 
     box-shadow:
-
-    0 5px 18px rgba(0,0,0,0.08);
-
+    0px 3px 10px rgba(0,0,0,0.08);
 
 }
 
 
+/* KPI CARD */
 
-.info-card h3 {
+div[data-testid="stMetric"] {
 
+    background:white;
 
-    color:
+    padding:20px;
 
-    #005BAB !important;
-
-
-}
-
-
-
-.info-card p {
-
-
-    color:
-
-    var(--text-color)
-
-    !important;
-
-
-}
-
-
-
-
-
-
-
-/* =================================================
-KPI CARD
-================================================= */
-
-
-div[data-testid="metric-container"] {
-
-
-    background:
-
-    var(--secondary-background-color);
-
-
-    border-radius:
-
-    16px;
-
-
-    padding:
-
-    18px;
-
+    border-radius:15px;
 
     border:
-
-    1px solid rgba(128,128,128,0.25);
-
+    1px solid #e5e7eb;
 
     box-shadow:
-
-    0 5px 18px rgba(0,0,0,0.08);
-
+    0px 3px 10px rgba(0,0,0,0.08);
 
 }
-
-
-
-
-
-div[data-testid="stMetricLabel"] {
-
-
-    color:
-
-    var(--text-color)
-
-    !important;
-
-
-    font-weight:
-
-    600;
-
-
-}
-
-
-
 
 
 div[data-testid="stMetricValue"] {
 
+    color:#003D79 !important;
 
-    color:
+    font-size:30px !important;
 
-    #005BAB
+    font-weight:800;
 
-    !important;
-
-
-    font-size:
-
-    30px !important;
+}
 
 
-    font-weight:
+div[data-testid="stMetricLabel"] {
 
-    800 !important;
+    color:#374151 !important;
 
+    font-weight:600;
 
 }
 
 
 
+/* SECTION TITLE */
 
+.section-title {
 
+    font-size:23px;
 
+    font-weight:700;
 
-/* =================================================
-SIDEBAR CORPORATE
-================================================= */
-
-
-section[data-testid="stSidebar"] {
-
-
-    background:
-
-    linear-gradient(
-
-        180deg,
-
-        #003B71,
-
-        #001F3F
-
-    );
-
+    color:#003D79;
 
 }
 
 
 
-section[data-testid="stSidebar"] * {
+/* BTN LOGO */
 
+.btn-logo-box {
 
-    color:white !important;
+    background:white;
 
+    padding:15px;
 
-}
+    border-radius:12px;
 
-
-
-
-
-section[data-testid="stSidebar"] button {
-
-
-    background:
-
-    #F58220 !important;
-
-
-    color:white !important;
-
-
-    border-radius:
-
-    10px;
-
-
-    border:none;
-
-
-    font-weight:
-
-    700;
-
+    border-left:
+    6px solid #F58220;
 
 }
 
 
 
+.btn-logo-text {
 
+    color:#003D79;
 
+    font-size:28px;
 
-
-
-/* =================================================
-BUTTON
-================================================= */
-
-
-.stButton button {
-
-
-    background:
-
-    linear-gradient(
-
-        90deg,
-
-        #005BAB,
-
-        #003B71
-
-    );
-
-
-    color:white;
-
-
-    border-radius:
-
-    10px;
-
-
-    border:none;
-
-
-    font-weight:
-
-    600;
-
+    font-weight:800;
 
 }
 
 
+.btn-logo-subtitle {
 
-.stButton button:hover {
+    color:#F58220;
 
+    font-size:13px;
 
-    background:
-
-    #F58220;
-
-
-    color:white;
-
+    font-weight:600;
 
 }
-
-
-
-
-
-
-/* =================================================
-DOWNLOAD BUTTON
-================================================= */
-
-
-.stDownloadButton button {
-
-
-    background:
-
-    #F58220 !important;
-
-
-    color:white !important;
-
-
-    border-radius:
-
-    10px;
-
-
-    font-weight:
-
-    700;
-
-
-}
-
-
-
-
-
-
-
-/* =================================================
-TABLE
-================================================= */
-
-
-div[data-testid="stDataFrame"] {
-
-
-    border-radius:
-
-    15px;
-
-
-    overflow:hidden;
-
-
-}
-
-
-
 
 
 </style>
 
-
 """,
-
-unsafe_allow_html=True
-
-)
-
-
-
-
+unsafe_allow_html=True)
 
 
 
 # =====================================================
-# FILE PATH
+# PATH FILE
 # =====================================================
-
 
 DATA_DIR = Path("data")
-
 
 DATA_FILE = DATA_DIR / "prospek_nasabah.csv"
 
 
-
-
 ASSETS_DIR = Path("assets")
 
-
 LOGO_PATH = ASSETS_DIR / "logo_btn.png"
-
-
-
-
 
 
 
@@ -583,90 +205,72 @@ LOGO_PATH = ASSETS_DIR / "logo_btn.png"
 COLUMNS = [
 
     "ID",
-
     "Tanggal",
-
     "Nama Calon Nasabah",
-
     "Nomor HP",
-
     "Alamat",
-
     "Produk Diminati",
-
     "Status Follow Up",
-
     "Keterangan"
 
 ]
 
 
-
-
-
 PRODUK_LIST = [
 
     "KUR",
-
     "KPR"
 
 ]
 
 
-
-
-
 STATUS_LIST = [
 
     "Dihubungi",
-
     "Merespons",
-
     "Berminat",
-
     "Disurvei",
-
     "Terealisasi"
 
 ]
+
+
+
 # =====================================================
-# DATA DUMMY NASABAH
+# DATA DUMMY
 # =====================================================
 
 
 def get_dummy_data():
 
-
     today = date.today()
-
 
 
     data = [
 
-
         [
             "Andi Prasetyo",
-            "081234567801",
-            "Kelurahan Payaman Kecamatan Nganjuk",
+            "08XX-0000-1001",
+            "Jl Ahmad Yani Kecamatan Nganjuk",
             "KUR",
             "Dihubungi",
-            "Prospek hasil WA blast usaha toko kelontong"
+            "Prospek hasil WA blast usaha toko"
         ],
 
 
         [
             "Siti Rahayu",
-            "081234567802",
+            "08XX-0000-1002",
             "Perum Kertosono Kecamatan Kertosono",
             "KPR",
             "Merespons",
-            "Meminta simulasi cicilan rumah subsidi"
+            "Menanyakan simulasi cicilan"
         ],
 
 
         [
             "Budi Santoso",
-            "081234567803",
+            "08XX-0000-1003",
             "Desa Warujayeng Kecamatan Tanjunganom",
             "KUR",
             "Berminat",
@@ -676,7 +280,7 @@ def get_dummy_data():
 
         [
             "Dewi Lestari",
-            "081234567804",
+            "08XX-0000-1004",
             "Desa Sukomoro Kecamatan Sukomoro",
             "KUR",
             "Disurvei",
@@ -686,239 +290,114 @@ def get_dummy_data():
 
         [
             "Agus Firmansyah",
-            "081234567805",
+            "08XX-0000-1005",
             "Kelurahan Mangundikaran Kecamatan Nganjuk",
             "KPR",
             "Terealisasi",
-            "Dokumen pengajuan telah lengkap"
-        ],
-
-
-        [
-            "Rina Wulandari",
-            "081234567806",
-            "Desa Loceret Kecamatan Loceret",
-            "KUR",
-            "Dihubungi",
-            "Pemilik usaha laundry rumahan"
-        ],
-
-
-        [
-            "Eko Purnomo",
-            "081234567807",
-            "Desa Berbek Kecamatan Berbek",
-            "KUR",
-            "Merespons",
-            "Menanyakan plafon pinjaman"
-        ],
-
-
-        [
-            "Fitri Handayani",
-            "081234567808",
-            "Desa Bagor Kecamatan Bagor",
-            "KPR",
-            "Berminat",
-            "Tertarik rumah pertama"
-        ],
-
-
-        [
-            "Hendra Wijaya",
-            "081234567809",
-            "Desa Baron Kecamatan Baron",
-            "KUR",
-            "Disurvei",
-            "Survei usaha bengkel"
-        ],
-
-
-        [
-            "Lina Safitri",
-            "081234567810",
-            "Desa Prambon Kecamatan Prambon",
-            "KUR",
-            "Terealisasi",
-            "Pembiayaan usaha berhasil"
+            "Pengajuan KPR selesai"
         ]
 
     ]
 
 
-
+    # Tambahkan data berulang agar dashboard terlihat
 
     dummy=[]
 
 
-
     for i in range(1,31):
 
-
-        item=data[(i-1) % len(data)]
-
+        item=data[(i-1)%len(data)]
 
 
-        dummy.append(
+        dummy.append({
+
+            "ID":i,
+
+            "Tanggal":
+            str(
+                today -
+                timedelta(days=(30-i)//2)
+            ),
 
 
-            {
-
-                "ID":i,
-
-
-                "Tanggal":
-
-                str(
-
-                    today -
-
-                    timedelta(
-
-                        days=(30-i)//2
-
-                    )
-
-                ),
+            "Nama Calon Nasabah":
+            item[0],
 
 
-
-                "Nama Calon Nasabah":
-
-                item[0],
+            "Nomor HP":
+            item[1],
 
 
-
-                "Nomor HP":
-
-                item[1],
+            "Alamat":
+            item[2],
 
 
-
-                "Alamat":
-
-                item[2],
+            "Produk Diminati":
+            item[3],
 
 
-
-                "Produk Diminati":
-
-                item[3],
+            "Status Follow Up":
+            item[4],
 
 
+            "Keterangan":
+            item[5]
 
-                "Status Follow Up":
-
-                item[4],
-
-
-
-                "Keterangan":
-
-                item[5]
-
-            }
-
-
-        )
+        })
 
 
     return dummy
-
-
-
-
-
-
-
 # =====================================================
-# DATABASE MANAGEMENT
+# FUNGSI DATABASE
 # =====================================================
-
 
 
 def init_data():
 
-
-    DATA_DIR.mkdir(
-
-        exist_ok=True
-
-    )
-
+    DATA_DIR.mkdir(exist_ok=True)
 
 
     if not DATA_FILE.exists():
 
-
         df_dummy = pd.DataFrame(
-
-
             get_dummy_data(),
-
-
             columns=COLUMNS
-
-
         )
-
 
         df_dummy.to_csv(
-
-
             DATA_FILE,
-
-
             index=False
-
-
         )
-
-
-
-
 
 
 
 def load_data():
 
-
     init_data()
 
 
-
-    df=pd.read_csv(
-
-
+    df = pd.read_csv(
         DATA_FILE,
-
-
         dtype=str
-
-
     )
 
 
-
-    df=df.fillna("")
-
+    df = df.fillna("")
 
 
     for col in COLUMNS:
 
-
         if col not in df.columns:
-
 
             df[col]=""
 
 
 
-
-    return df[COLUMNS]
-
+    df = df[COLUMNS]
 
 
+    return df
 
 
 
@@ -926,23 +405,12 @@ def load_data():
 
 def save_data(df):
 
-
-    DATA_DIR.mkdir(
-
-        exist_ok=True
-
-    )
-
+    DATA_DIR.mkdir(exist_ok=True)
 
     df.to_csv(
-
         DATA_FILE,
-
         index=False
-
     )
-
-
 
 
 
@@ -950,13 +418,9 @@ def save_data(df):
 
 def reset_dummy_data():
 
-
-    df_dummy=pd.DataFrame(
-
+    df_dummy = pd.DataFrame(
         get_dummy_data(),
-
         columns=COLUMNS
-
     )
 
 
@@ -966,42 +430,27 @@ def reset_dummy_data():
 
 
 
-
-
 def get_next_id(df):
 
-
     if df.empty:
-
 
         return 1
 
 
-
-    angka=pd.to_numeric(
-
+    angka = pd.to_numeric(
         df["ID"],
-
         errors="coerce"
-
     )
-
 
 
     if angka.isna().all():
 
-
         return 1
 
 
-
     return int(
-
         angka.max()
-
-    )+1
-
-
+    ) + 1
 
 
 
@@ -1013,42 +462,26 @@ def get_next_id(df):
 # =====================================================
 
 
-
-
 def count_status(df,status):
 
-
     if df.empty:
-
 
         return 0
 
 
-
     return int(
-
         (
-
             df["Status Follow Up"]
-
             ==
-
             status
-
         ).sum()
-
     )
 
 
 
 
 
-
-
-
-
 def extract_kecamatan(alamat):
-
 
     if pd.isna(alamat):
 
@@ -1062,25 +495,17 @@ def extract_kecamatan(alamat):
 
     if "Kecamatan" in alamat:
 
-
-        hasil=(
-
+        hasil = (
             alamat
-
             .split("Kecamatan")[1]
-
             .split(",")[0]
-
             .strip()
-
         )
 
 
         if hasil:
 
-
             return hasil
-
 
 
 
@@ -1092,20 +517,12 @@ def extract_kecamatan(alamat):
 
 
 
-
-
 def filter_data(
-
         df,
-
         produk,
-
         status,
-
         periode,
-
         keyword
-
 ):
 
 
@@ -1113,143 +530,81 @@ def filter_data(
 
 
 
-
-
-
-    # FILTER PRODUK
-
     if produk!="Semua":
 
-
         result=result[
-
             result["Produk Diminati"]
-
             ==
-
             produk
-
         ]
 
 
-
-
-
-
-    # FILTER STATUS
 
     if status!="Semua":
 
-
         result=result[
-
             result["Status Follow Up"]
-
             ==
-
             status
-
         ]
 
 
-
-
-
-
-
-    # FILTER PERIODE
 
     if periode!="Semua":
 
 
         tanggal=pd.to_datetime(
-
             result["Tanggal"],
-
             errors="coerce"
-
         )
-
 
 
         sekarang=pd.to_datetime(
-
             date.today()
-
         )
-
 
 
         if periode=="Hari ini":
 
-
             result=result[
-
                 tanggal.dt.date
-
                 ==
-
                 date.today()
-
             ]
 
 
 
         elif periode=="7 hari terakhir":
 
-
             result=result[
-
                 tanggal >=
-
                 sekarang -
-
                 timedelta(days=7)
-
             ]
 
 
 
         elif periode=="Bulan ini":
 
-
             result=result[
-
                 (
-
                     tanggal.dt.month
-
                     ==
-
                     sekarang.month
-
                 )
-
                 &
-
                 (
-
                     tanggal.dt.year
-
                     ==
-
                     sekarang.year
-
                 )
-
             ]
 
 
 
 
 
-
-
-
-    # SEARCH
-
     if keyword.strip()!="":
-
 
 
         keyword=keyword.lower()
@@ -1258,96 +613,35 @@ def filter_data(
 
         result=result[
 
-
-
             result["Nama Calon Nasabah"]
-
             .str.lower()
-
-            .str.contains(
-
-                keyword,
-
-                na=False
-
-            )
-
-
+            .str.contains(keyword,na=False)
 
             |
-
-
 
             result["Nomor HP"]
-
             .str.lower()
-
-            .str.contains(
-
-                keyword,
-
-                na=False
-
-            )
-
-
+            .str.contains(keyword,na=False)
 
             |
-
-
 
             result["Alamat"]
-
             .str.lower()
-
-            .str.contains(
-
-                keyword,
-
-                na=False
-
-            )
-
-
+            .str.contains(keyword,na=False)
 
             |
-
-
 
             result["Produk Diminati"]
-
             .str.lower()
-
-            .str.contains(
-
-                keyword,
-
-                na=False
-
-            )
-
-
+            .str.contains(keyword,na=False)
 
             |
 
-
-
             result["Status Follow Up"]
-
             .str.lower()
-
-            .str.contains(
-
-                keyword,
-
-                na=False
-
-            )
-
+            .str.contains(keyword,na=False)
 
         ]
-
-
 
 
 
@@ -1360,26 +654,26 @@ def filter_data(
 
 
 # =====================================================
-# LOAD DATA UTAMA
+# LOAD DATA AWAL
 # =====================================================
 
 
 df = load_data()
-# =====================================================
-# SIDEBAR CORPORATE
-# =====================================================
 
+
+
+
+
+# =====================================================
+# SIDEBAR
+# =====================================================
 
 
 if LOGO_PATH.exists():
 
-
     st.sidebar.image(
-
         str(LOGO_PATH),
-
         width=170
-
     )
 
 
@@ -1387,32 +681,22 @@ else:
 
 
     st.sidebar.markdown(
-
     """
 
     <div class="btn-logo-box">
 
+    <div class="btn-logo-text">
+    BANK BTN
+    </div>
 
-        <div class="btn-logo-text">
-
-            BANK BTN
-
-        </div>
-
-
-        <div class="btn-logo-subtitle">
-
-            Monitoring Prospek KUR/KPR
-
-        </div>
-
+    <div class="btn-logo-subtitle">
+    Monitoring Prospek KUR/KPR
+    </div>
 
     </div>
 
     """,
-
     unsafe_allow_html=True
-
     )
 
 
@@ -1420,23 +704,14 @@ else:
 
 
 st.sidebar.markdown(
-
-"""
-
-## Monitoring System
-
-
-"""
-
+"## Menu"
 )
-
-
 
 
 
 menu = st.sidebar.radio(
 
-    "Menu Utama",
+    "Pilih Halaman",
 
     [
 
@@ -1458,191 +733,113 @@ st.sidebar.divider()
 
 
 
-
-
 if st.sidebar.button(
-
-    "🔄 Reset Data Dummy"
-
+    "📥 Reset Data Dummy"
 ):
-
 
     reset_dummy_data()
 
-
-    st.sidebar.success(
-
-        "Data berhasil diperbarui"
-
+    st.success(
+        "Data berhasil direset"
     )
 
 
 
 
-
-st.sidebar.markdown(
+st.sidebar.info(
 
 """
 
----
+Dashboard monitoring prospek
 
-### Informasi Sistem
+KUR/KPR untuk membantu
 
+pencatatan dan evaluasi
 
-Dashboard ini digunakan untuk:
-
-✓ Monitoring prospek nasabah
-
-✓ Evaluasi follow up marketing
-
-✓ Analisis produk KUR/KPR
-
-✓ Monitoring wilayah prospek
-
-
----
-
-**BTN Digital Monitoring System**
+proses pemasaran nasabah.
 
 """
 
 )
-
-
-
-
-
-
-
-
 # =====================================================
 # HALAMAN BERANDA
 # =====================================================
 
 
-
-if menu=="Beranda":
-
+if menu == "Beranda":
 
 
     st.markdown(
-
     """
 
     <div class="title-box">
 
+    <h1>
+    Monitoring Prospek Nasabah KUR/KPR
+    </h1>
 
-        <h1>
-
-        Dashboard Monitoring Prospek Nasabah KUR/KPR
-
-        </h1>
-
-
-        <p>
-
-        Sistem digital monitoring aktivitas pemasaran dan progres calon nasabah.
-
-        </p>
-
+    <p>
+    Sistem pencatatan dan monitoring progres calon nasabah secara digital.
+    </p>
 
     </div>
 
-
     """,
-
     unsafe_allow_html=True
-
     )
 
 
 
-
-
-
     st.markdown(
-
     """
-
     <div class="section-title">
-
-    Overview Sistem
-
+    Tentang Dashboard
     </div>
-
-
     """,
-
     unsafe_allow_html=True
-
     )
 
 
 
-
-
-
     st.markdown(
-
     """
 
     <div class="info-card">
 
+    Dashboard ini digunakan untuk melakukan pencatatan,
+    pemantauan, dan evaluasi prospek nasabah KUR/KPR.
 
-    Dashboard Monitoring Prospek Nasabah KUR/KPR
-
-    merupakan sistem informasi untuk membantu proses
-
-    pencatatan, pemantauan, dan evaluasi calon nasabah.
-
+    Data yang dikelola meliputi:
 
     <br><br>
 
-
-    Sistem ini mendukung aktivitas marketing melalui
-
-    pengelolaan data:
-
-
-    <br><br>
-
-
-    • Data calon nasabah
+    • Nama calon nasabah
 
     <br>
-
-    • Produk yang diminati
+    • Nomor HP
 
     <br>
+    • Wilayah
 
+    <br>
+    • Produk diminati
+
+    <br>
     • Status follow up
 
     <br>
-
-    • Wilayah prospek
-
-    <br>
-
-    • Perkembangan proses pengajuan
+    • Keterangan proses marketing
 
 
     </div>
 
-
     """,
-
     unsafe_allow_html=True
-
     )
 
 
 
-
-
-
     st.markdown("---")
-
-
 
 
 
@@ -1650,11 +847,7 @@ if menu=="Beranda":
 
 
 
-
-
-
     with col1:
-
 
 
         st.markdown(
@@ -1663,89 +856,62 @@ if menu=="Beranda":
 
         <div class="info-card">
 
-
         <h3>
-
-        📋 Data Entry Prospek
-
+        📌 Data Entry Prospek
         </h3>
 
 
+        Form digunakan untuk mencatat
 
-        <p>
+        data calon nasabah dari kegiatan
 
-
-        Digunakan untuk mencatat data
-
-        calon nasabah dari kegiatan marketing,
-
-        WA blast, dan aktivitas pemasaran.
-
-
-        </p>
-
+        marketing dan WA blast.
 
 
         </div>
-
 
         """,
 
         unsafe_allow_html=True
 
         )
-
-
-
-
-
 
 
 
     with col2:
 
 
-
         st.markdown(
 
         """
 
         <div class="info-card">
 
-
         <h3>
-
         📊 Dashboard Monitoring
-
         </h3>
 
 
+        Menampilkan informasi penting
 
-        <p>
+        terkait jumlah prospek,
 
+        progres follow up,
 
-        Menampilkan informasi strategis
+        produk,
 
-        terkait jumlah prospek, status follow up,
+        waktu,
 
-        produk, tren waktu, dan wilayah.
-
-
-        </p>
-
+        dan wilayah.
 
 
         </div>
-
 
         """,
 
         unsafe_allow_html=True
 
         )
-
-
-
 
 
 
@@ -1755,118 +921,62 @@ if menu=="Beranda":
 
 
 
-
-
     st.markdown(
-
-    "### Ringkasan Data Saat Ini"
-
+    "### Ringkasan Data"
     )
 
 
 
-
-
-    total=len(df)
-
-
-
-    kur=int(
-
-        (
-
-            df["Produk Diminati"]
-
-            ==
-
-            "KUR"
-
-        ).sum()
-
-    )
+    a,b,c,d=st.columns(4)
 
 
 
-    kpr=int(
-
-        (
-
-            df["Produk Diminati"]
-
-            ==
-
-            "KPR"
-
-        ).sum()
-
-    )
-
-
-
-    realisasi=count_status(
-
-        df,
-
-        "Terealisasi"
-
-    )
-
-
-
-
-
-
-
-
-    c1,c2,c3,c4=st.columns(4)
-
-
-
-
-
-    c1.metric(
-
+    a.metric(
         "Total Prospek",
-
-        total
-
+        len(df)
     )
 
 
-
-
-
-    c2.metric(
-
+    b.metric(
         "Prospek KUR",
-
-        kur
-
+        int(
+            (
+                df["Produk Diminati"]
+                ==
+                "KUR"
+            ).sum()
+        )
     )
 
 
 
-
-
-    c3.metric(
-
+    c.metric(
         "Prospek KPR",
-
-        kpr
-
+        int(
+            (
+                df["Produk Diminati"]
+                ==
+                "KPR"
+            ).sum()
+        )
     )
 
 
 
-
-
-    c4.metric(
-
+    d.metric(
         "Terealisasi",
-
-        realisasi
-
+        count_status(
+            df,
+            "Terealisasi"
+        )
     )
+
+
+
+
+
+
+
 # =====================================================
 # HALAMAN DATA ENTRY
 # =====================================================
@@ -1882,23 +992,15 @@ elif menu=="Data Entry":
 
     <div class="title-box">
 
+    <h1>
+    Form Data Entry Prospek Nasabah
+    </h1>
 
-        <h1>
-
-        Form Data Entry Prospek Nasabah
-
-        </h1>
-
-
-        <p>
-
-        Input dan pengelolaan data calon nasabah KUR/KPR.
-
-        </p>
-
+    <p>
+    Input data calon nasabah hasil marketing.
+    </p>
 
     </div>
-
 
     """,
 
@@ -1910,26 +1012,16 @@ elif menu=="Data Entry":
 
 
 
-
-
     st.markdown(
-
-        "### Tambah Data Prospek"
-
+    "### Tambah Data Prospek"
     )
 
 
 
 
-
-
-
     with st.form(
-
-        "form_input_nasabah",
-
+        "form_input",
         clear_on_submit=True
-
     ):
 
 
@@ -1938,26 +1030,20 @@ elif menu=="Data Entry":
 
 
 
-
-
         with col1:
 
 
-            nama = st.text_input(
-
+            nama=st.text_input(
                 "Nama Calon Nasabah"
-
             )
 
 
-            nomor_hp = st.text_input(
-
+            hp=st.text_input(
                 "Nomor HP"
-
             )
 
 
-            produk = st.selectbox(
+            produk=st.selectbox(
 
                 "Produk Diminati",
 
@@ -1967,19 +1053,15 @@ elif menu=="Data Entry":
 
 
 
-
-
         with col2:
 
 
-            alamat = st.text_area(
-
+            alamat=st.text_area(
                 "Alamat"
-
             )
 
 
-            status = st.selectbox(
+            status=st.selectbox(
 
                 "Status Follow Up",
 
@@ -1989,33 +1071,19 @@ elif menu=="Data Entry":
 
 
 
-
-
-
-        keterangan = st.text_area(
-
+        keterangan=st.text_area(
             "Keterangan"
-
         )
 
 
 
-
-
-
-        submit = st.form_submit_button(
-
-            "💾 Simpan Data Prospek"
-
+        simpan=st.form_submit_button(
+            "💾 Simpan Data"
         )
 
 
 
-
-
-
-
-        if submit:
+        if simpan:
 
 
 
@@ -2023,31 +1091,15 @@ elif menu=="Data Entry":
 
 
                 st.warning(
-
-                    "Nama calon nasabah wajib diisi"
-
+                    "Nama wajib diisi"
                 )
 
 
-
-            elif nomor_hp.strip()=="":
+            elif hp.strip()=="":
 
 
                 st.warning(
-
                     "Nomor HP wajib diisi"
-
-                )
-
-
-
-            elif alamat.strip()=="":
-
-
-                st.warning(
-
-                    "Alamat wajib diisi"
-
                 )
 
 
@@ -2056,71 +1108,52 @@ elif menu=="Data Entry":
 
 
 
-                data_baru = {
+                data_baru={
 
 
                     "ID":
-
                     get_next_id(df),
 
 
-
                     "Tanggal":
-
                     str(date.today()),
 
 
-
                     "Nama Calon Nasabah":
-
-                    nama.strip(),
-
+                    nama,
 
 
                     "Nomor HP":
-
-                    nomor_hp.strip(),
-
+                    hp,
 
 
                     "Alamat":
-
-                    alamat.strip(),
-
+                    alamat,
 
 
                     "Produk Diminati":
-
                     produk,
 
 
-
                     "Status Follow Up":
-
                     status,
 
 
-
                     "Keterangan":
-
-                    keterangan.strip()
-
+                    keterangan
 
                 }
 
 
 
-
-                df = pd.concat(
+                df=pd.concat(
 
                     [
 
                         df,
 
                         pd.DataFrame(
-
                             [data_baru]
-
                         )
 
                     ],
@@ -2131,20 +1164,13 @@ elif menu=="Data Entry":
 
 
 
-
-
                 save_data(df)
 
 
 
                 st.success(
-
-                    "Data prospek berhasil disimpan"
-
+                    "Data berhasil disimpan"
                 )
-
-
-
 
 
 
@@ -2154,73 +1180,54 @@ elif menu=="Data Entry":
 
 
 
-
-
-
-
     st.markdown(
-
-        "### Monitoring Data Prospek"
-
+    "### Monitoring Data"
     )
 
 
 
-
-
-
-    f1,f2,f3,f4 = st.columns(
-
+    f1,f2,f3,f4=st.columns(
         [1,1,1,2]
-
     )
-
-
-
 
 
 
     with f1:
 
 
-        produk_filter = st.selectbox(
+        produk_filter=st.selectbox(
 
-            "Filter Produk",
+            "Produk",
 
             ["Semua"]+PRODUK_LIST,
 
-            key="filter_produk_entry"
+            key="entry_produk"
 
         )
-
-
 
 
 
     with f2:
 
 
-        status_filter = st.selectbox(
+        status_filter=st.selectbox(
 
-            "Filter Status",
+            "Status",
 
             ["Semua"]+STATUS_LIST,
 
-            key="filter_status_entry"
+            key="entry_status"
 
         )
-
-
-
 
 
 
     with f3:
 
 
-        periode_filter = st.selectbox(
+        periode_filter=st.selectbox(
 
-            "Filter Periode",
+            "Periode",
 
             [
 
@@ -2234,27 +1241,20 @@ elif menu=="Data Entry":
 
             ],
 
-            key="filter_periode_entry"
+            key="entry_periode"
 
         )
-
-
-
 
 
 
     with f4:
 
 
-        keyword = st.text_input(
+        keyword=st.text_input(
 
-            "Pencarian Data",
+            "Pencarian",
 
-            placeholder=
-
-            "Nama / HP / Produk / Status",
-
-            key="search_entry"
+            key="entry_search"
 
         )
 
@@ -2262,10 +1262,7 @@ elif menu=="Data Entry":
 
 
 
-
-
-
-    filtered_data = filter_data(
+    tampil=filter_data(
 
         df,
 
@@ -2281,68 +1278,43 @@ elif menu=="Data Entry":
 
 
 
-
-
-
     st.caption(
 
-        f"Menampilkan {len(filtered_data)} dari {len(df)} data"
+        f"Menampilkan {len(tampil)} dari {len(df)} data"
 
     )
-
-
-
-
 
 
 
     st.dataframe(
 
-        filtered_data,
+        tampil,
 
-        use_container_width=True,
-
-        hide_index=True
+        use_container_width=True
 
     )
 
 
 
-
-
-
-
-
-    csv_data = (
-
-        filtered_data
-
-        .to_csv(index=False)
-
-        .encode("utf-8")
-
+    csv=tampil.to_csv(
+        index=False
+    ).encode(
+        "utf-8"
     )
-
-
-
 
 
 
     st.download_button(
 
-        label="⬇️ Download Data CSV",
+        "⬇️ Download CSV",
 
-        data=csv_data,
+        csv,
 
-        file_name="data_prospek_nasabah.csv",
+        "data_prospek.csv",
 
-        mime="text/csv"
+        "text/csv"
 
     )
-
-
-
-
 
 
 
@@ -2350,112 +1322,45 @@ elif menu=="Data Entry":
 
 
 
-
-
-
-
     st.markdown(
-
-        "### Hapus Data Prospek"
-
+    "### Hapus Data"
     )
 
 
 
-
-
-
-    col_delete1,col_delete2 = st.columns(
-
-        [3,1]
-
+    hapus_id=st.text_input(
+        "Masukkan ID Data"
     )
 
 
+    if st.button(
+        "🗑️ Hapus"
+    ):
 
 
+        if hapus_id in df["ID"].astype(str).tolist():
 
 
-    with col_delete1:
-
-
-        delete_id = st.text_input(
-
-            "Masukkan ID Data"
-
-        )
-
-
-
-
-
-
-    with col_delete2:
-
-
-        st.write("")
-
-        st.write("")
-
-
-
-        delete_button = st.button(
-
-            "🗑️ Hapus"
-
-        )
-
-
-
-
-
-
-    if delete_button:
-
-
-
-        if delete_id in df["ID"].astype(str).tolist():
-
-
-
-            df = df[
-
+            df=df[
                 df["ID"].astype(str)
-
                 !=
-
-                delete_id
-
+                hapus_id
             ]
-
 
 
             save_data(df)
 
 
-
             st.success(
-
                 "Data berhasil dihapus"
-
             )
-
-
-
-            st.rerun()
-
-
-
 
 
         else:
 
 
-
             st.error(
-
                 "ID tidak ditemukan"
-
             )
 # =====================================================
 # HALAMAN DASHBOARD
@@ -2465,31 +1370,24 @@ elif menu=="Data Entry":
 elif menu=="Dashboard":
 
 
-
     st.markdown(
 
     """
 
     <div class="title-box">
 
-
-        <h1>
-
-        Dashboard Monitoring Prospek Nasabah KUR/KPR
-
-        </h1>
+    <h1>
+    Dashboard Monitoring Prospek Nasabah KUR/KPR
+    </h1>
 
 
-        <p>
-
-        Monitoring performa prospek berdasarkan status,
-        produk, waktu, dan wilayah.
-
-        </p>
+    <p>
+    Monitoring performa prospek berdasarkan status,
+    produk, waktu, dan wilayah.
+    </p>
 
 
     </div>
-
 
     """,
 
@@ -2501,59 +1399,43 @@ elif menu=="Dashboard":
 
 
 
-
-
     if df.empty:
 
 
-
         st.info(
-
             "Belum ada data tersedia"
-
         )
-
-
 
 
     else:
 
 
 
-        # =================================================
+        # =============================================
         # FILTER DASHBOARD
-        # =================================================
+        # =============================================
 
 
         st.markdown(
-
-            "### Filter Monitoring"
-
+            "### Filter Dashboard"
         )
 
 
 
-
-
-        col1,col2,col3,col4 = st.columns(
-
+        col1,col2,col3,col4=st.columns(
             [1,1,1,2]
-
         )
-
-
-
 
 
 
         with col1:
 
 
-            produk_dashboard = st.selectbox(
+            produk_dash=st.selectbox(
 
                 "Produk",
 
-                ["Semua"] + PRODUK_LIST,
+                ["Semua"]+PRODUK_LIST,
 
                 key="dashboard_produk"
 
@@ -2561,17 +1443,14 @@ elif menu=="Dashboard":
 
 
 
-
-
-
         with col2:
 
 
-            status_dashboard = st.selectbox(
+            status_dash=st.selectbox(
 
-                "Status Follow Up",
+                "Status",
 
-                ["Semua"] + STATUS_LIST,
+                ["Semua"]+STATUS_LIST,
 
                 key="dashboard_status"
 
@@ -2579,13 +1458,10 @@ elif menu=="Dashboard":
 
 
 
-
-
-
         with col3:
 
 
-            periode_dashboard = st.selectbox(
+            periode_dash=st.selectbox(
 
                 "Periode",
 
@@ -2607,19 +1483,15 @@ elif menu=="Dashboard":
 
 
 
-
-
-
         with col4:
 
 
-            search_dashboard = st.text_input(
+            search_dash=st.text_input(
 
                 "Pencarian",
 
                 placeholder=
-
-                "Cari nama / nomor HP / alamat",
+                "Cari nama / HP / alamat",
 
                 key="dashboard_search"
 
@@ -2631,21 +1503,19 @@ elif menu=="Dashboard":
 
 
 
-        dashboard_df = filter_data(
+        dashboard_df=filter_data(
 
             df,
 
-            produk_dashboard,
+            produk_dash,
 
-            status_dashboard,
+            status_dash,
 
-            periode_dashboard,
+            periode_dash,
 
-            search_dashboard
+            search_dash
 
         )
-
-
 
 
 
@@ -2653,7 +1523,7 @@ elif menu=="Dashboard":
 
         st.caption(
 
-            f"Menampilkan {len(dashboard_df)} dari {len(df)} total prospek"
+            f"Data tampil : {len(dashboard_df)} dari {len(df)} total prospek"
 
         )
 
@@ -2661,26 +1531,18 @@ elif menu=="Dashboard":
 
 
 
-
-
-        # =================================================
-        # KPI MONITORING
-        # =================================================
+        # =============================================
+        # KPI CARD
+        # =============================================
 
 
         st.markdown(
-
             "### Ringkasan Monitoring"
-
         )
 
 
 
-
-
-        k1,k2,k3,k4,k5,k6 = st.columns(6)
-
-
+        k1,k2,k3,k4,k5,k6=st.columns(6)
 
 
 
@@ -2694,22 +1556,16 @@ elif menu=="Dashboard":
 
 
 
-
         k2.metric(
 
             "Dihubungi",
 
             count_status(
-
                 dashboard_df,
-
                 "Dihubungi"
-
             )
 
         )
-
-
 
 
 
@@ -2718,16 +1574,11 @@ elif menu=="Dashboard":
             "Merespons",
 
             count_status(
-
                 dashboard_df,
-
                 "Merespons"
-
             )
 
         )
-
-
 
 
 
@@ -2736,16 +1587,11 @@ elif menu=="Dashboard":
             "Berminat",
 
             count_status(
-
                 dashboard_df,
-
                 "Berminat"
-
             )
 
         )
-
-
 
 
 
@@ -2754,16 +1600,11 @@ elif menu=="Dashboard":
             "Disurvei",
 
             count_status(
-
                 dashboard_df,
-
                 "Disurvei"
-
             )
 
         )
-
-
 
 
 
@@ -2772,16 +1613,11 @@ elif menu=="Dashboard":
             "Terealisasi",
 
             count_status(
-
                 dashboard_df,
-
                 "Terealisasi"
-
             )
 
         )
-
-
 
 
 
@@ -2793,21 +1629,12 @@ elif menu=="Dashboard":
 
 
 
-
-
-
         if dashboard_df.empty:
 
 
-
             st.warning(
-
-                "Tidak ada data yang sesuai filter"
-
+                "Tidak ada data sesuai filter"
             )
-
-
-
 
 
 
@@ -2815,13 +1642,11 @@ elif menu=="Dashboard":
 
 
 
-
-
-            chart_df = dashboard_df.copy()
+            chart_df=dashboard_df.copy()
 
 
 
-            chart_df["Tanggal"] = pd.to_datetime(
+            chart_df["Tanggal"]=pd.to_datetime(
 
                 chart_df["Tanggal"],
 
@@ -2831,74 +1656,52 @@ elif menu=="Dashboard":
 
 
 
-
-            chart_df["Kecamatan"] = chart_df[
+            chart_df["Kecamatan"]=chart_df[
 
                 "Alamat"
 
             ].apply(
-
                 extract_kecamatan
-
             )
 
 
 
 
 
-
-
-            # =================================================
+            # =============================================
             # GRAFIK 1
-            # STATUS FOLLOW UP
-            # =================================================
-
+            # =============================================
 
 
             st.markdown(
-
                 "### 1. Jumlah Prospek Berdasarkan Status Follow Up"
-
             )
 
 
-
-
-
-            status_chart = (
+            status_chart=(
 
                 chart_df
 
                 .groupby(
-
                     "Status Follow Up"
-
                 )
 
                 .size()
 
                 .reindex(
-
                     STATUS_LIST,
-
                     fill_value=0
-
                 )
 
                 .reset_index(
-
                     name="Jumlah"
-
                 )
 
             )
 
 
 
-
-
-
-            fig_status = px.bar(
+            fig1=px.bar(
 
                 status_chart,
 
@@ -2908,42 +1711,23 @@ elif menu=="Dashboard":
 
                 text="Jumlah",
 
-                title="Monitoring Tahapan Follow Up"
+                title=
+                "Jumlah Prospek Berdasarkan Status Follow Up"
 
             )
 
 
 
-
-
-
-            fig_status.update_traces(
+            fig1.update_traces(
 
                 textposition="outside"
 
             )
 
 
-
-
-
-            fig_status.update_layout(
-
-                height=420,
-
-                template="plotly_white",
-
-                showlegend=False
-
-            )
-
-
-
-
-
             st.plotly_chart(
 
-                fig_status,
+                fig1,
 
                 use_container_width=True
 
@@ -2955,18 +1739,18 @@ elif menu=="Dashboard":
 
 
 
+            # =============================================
+            # GRAFIK 2
+            # =============================================
 
 
-            # =================================================
-            # GRAFIK 2 DAN 3
-            # =================================================
+            st.markdown(
+                "### 2. Persentase Produk Diminati"
+            )
 
 
 
-            col_a,col_b = st.columns(2)
-
-
-
+            col_a,col_b=st.columns(2)
 
 
 
@@ -2974,72 +1758,46 @@ elif menu=="Dashboard":
 
 
 
-                st.markdown(
-
-                    "### 2. Persentase Produk Diminati"
-
-                )
-
-
-
-
-
-                produk_chart = (
+                produk_chart=(
 
                     chart_df
 
                     .groupby(
-
                         "Produk Diminati"
-
                     )
 
                     .size()
 
                     .reset_index(
-
                         name="Jumlah"
-
                     )
 
                 )
 
 
 
-
-
-
-                fig_produk = px.pie(
+                fig2=px.pie(
 
                     produk_chart,
 
-                    names="Produk Diminati",
+                    names=
+                    "Produk Diminati",
 
-                    values="Jumlah",
+                    values=
+                    "Jumlah",
 
-                    hole=0.45,
+                    hole=0.4,
 
-                    title="Komposisi Produk KUR dan KPR"
-
-                )
-
-
-
-
-
-                fig_produk.update_layout(
-
-                    height=420
+                    title=
+                    "Komposisi Produk KUR dan KPR"
 
                 )
-
-
 
 
 
                 st.plotly_chart(
 
-                    fig_produk,
+                    fig2,
 
                     use_container_width=True
 
@@ -3050,92 +1808,61 @@ elif menu=="Dashboard":
 
 
 
+            # =============================================
+            # GRAFIK 3
+            # =============================================
 
 
             with col_b:
 
 
 
-                st.markdown(
-
-                    "### 3. Tren Input Prospek Berdasarkan Tanggal"
-
-                )
-
-
-
-
-
-
-                trend_chart = (
+                trend=(
 
                     chart_df
 
                     .dropna(
-
                         subset=["Tanggal"]
-
                     )
 
                     .groupby(
-
                         "Tanggal"
-
                     )
 
                     .size()
 
                     .reset_index(
-
-                        name="Jumlah Prospek"
-
+                        name="Jumlah"
                     )
 
                     .sort_values(
-
                         "Tanggal"
-
                     )
 
                 )
 
 
 
+                fig3=px.line(
 
-
-
-                fig_trend = px.line(
-
-                    trend_chart,
+                    trend,
 
                     x="Tanggal",
 
-                    y="Jumlah Prospek",
+                    y="Jumlah",
 
                     markers=True,
 
-                    title="Perkembangan Input Prospek"
+                    title=
+                    "Tren Input Prospek"
 
                 )
-
-
-
-
-
-
-                fig_trend.update_layout(
-
-                    height=420
-
-                )
-
-
 
 
 
                 st.plotly_chart(
 
-                    fig_trend,
+                    fig3,
 
                     use_container_width=True
 
@@ -3147,47 +1874,34 @@ elif menu=="Dashboard":
 
 
 
-
-
-            # =================================================
+            # =============================================
             # GRAFIK 4
-            # KECAMATAN
-            # =================================================
-
+            # =============================================
 
 
             st.markdown(
-
                 "### 4. Sebaran Prospek Berdasarkan Kecamatan"
-
             )
 
 
 
-
-
-
-            kecamatan_chart = (
+            kec_chart=(
 
                 chart_df
 
                 .groupby(
-
                     "Kecamatan"
-
                 )
 
                 .size()
 
                 .reset_index(
-
-                    name="Jumlah Prospek"
-
+                    name="Jumlah"
                 )
 
                 .sort_values(
 
-                    "Jumlah Prospek",
+                    "Jumlah",
 
                     ascending=False
 
@@ -3197,31 +1911,24 @@ elif menu=="Dashboard":
 
 
 
+            fig4=px.bar(
 
-
-
-
-            fig_kecamatan = px.bar(
-
-                kecamatan_chart,
+                kec_chart,
 
                 x="Kecamatan",
 
-                y="Jumlah Prospek",
+                y="Jumlah",
 
-                text="Jumlah Prospek",
+                text="Jumlah",
 
-                title="Distribusi Wilayah Prospek"
+                title=
+                "Sebaran Prospek per Kecamatan"
 
             )
 
 
 
-
-
-
-
-            fig_kecamatan.update_traces(
+            fig4.update_traces(
 
                 textposition="outside"
 
@@ -3229,25 +1936,9 @@ elif menu=="Dashboard":
 
 
 
-
-
-
-            fig_kecamatan.update_layout(
-
-                height=450,
-
-                template="plotly_white"
-
-            )
-
-
-
-
-
-
             st.plotly_chart(
 
-                fig_kecamatan,
+                fig4,
 
                 use_container_width=True
 
@@ -3259,17 +1950,12 @@ elif menu=="Dashboard":
 
 
 
-
-
-            # =================================================
+            # =============================================
             # TABEL MONITORING
-            # =================================================
-
+            # =============================================
 
 
             st.divider()
-
-
 
 
 
@@ -3281,18 +1967,13 @@ elif menu=="Dashboard":
 
 
 
+            chart_df_display=chart_df.copy()
 
 
 
-            table_df = chart_df.copy()
+            chart_df_display["Tanggal"]=(
 
-
-
-
-
-            table_df["Tanggal"] = (
-
-                table_df["Tanggal"]
+                chart_df_display["Tanggal"]
 
                 .dt.strftime("%d-%m-%Y")
 
@@ -3300,31 +1981,24 @@ elif menu=="Dashboard":
 
 
 
-
-
-
-
             st.dataframe(
 
-                table_df,
+                chart_df_display,
 
-                use_container_width=True,
-
-                hide_index=True
+                use_container_width=True
 
             )
 
 
 
 
+            csv_dashboard=(
 
+                chart_df_display
 
-
-            download_file = (
-
-                table_df
-
-                .to_csv(index=False)
+                .to_csv(
+                    index=False
+                )
 
                 .encode("utf-8")
 
@@ -3332,20 +2006,14 @@ elif menu=="Dashboard":
 
 
 
-
-
-
-
             st.download_button(
 
-                label="⬇️ Download Dashboard Report",
+                "⬇️ Download Data Dashboard",
 
-                data=download_file,
+                csv_dashboard,
 
-                file_name=
+                "dashboard_monitoring_prospek.csv",
 
-                "dashboard_monitoring_prospek_btn.csv",
-
-                mime="text/csv"
+                "text/csv"
 
             )
