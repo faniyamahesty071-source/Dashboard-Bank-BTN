@@ -736,37 +736,6 @@ elif menu == "Dashboard":
                 )
 
                 st.plotly_chart(fig_kec, use_container_width=True)
-
-            st.markdown("---")
-
-            col5, col6 = st.columns(2)
-
-            with col5:
-                st.markdown("### 5. Perbandingan Status Follow Up per Produk")
-
-                produk_status = (
-                    chart_df.groupby(["Produk Diminati", "Status Follow Up"])
-                    .size()
-                    .reset_index(name="Jumlah")
-                )
-
-                fig_produk_status = px.bar(
-                    produk_status,
-                    x="Produk Diminati",
-                    y="Jumlah",
-                    color="Status Follow Up",
-                    barmode="group",
-                    text="Jumlah",
-                    title="Perbandingan Status Follow Up pada Produk KUR dan KPR"
-                )
-
-                fig_produk_status.update_traces(textposition="outside")
-                fig_produk_status.update_layout(
-                    yaxis_title="Jumlah Prospek",
-                    xaxis_title="Produk Diminati"
-                )
-
-                st.plotly_chart(fig_produk_status, use_container_width=True)
                 
             st.markdown("---")
             st.markdown("### Tabel Monitoring Prospek")
